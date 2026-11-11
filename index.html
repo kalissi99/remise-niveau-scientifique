@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prépa Ingénieur</title>
+<meta name="description" content="Maths, mécanique, électricité et cryptographie du lycée au niveau ingénieur : cours, formules expliquées et exercices corrigés pas à pas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: { typeset: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="sidebar">Chapitres</button>
+    <a class="brand" href="#accueil">Prépa<span>Ingénieur</span></a>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand brand-side" href="#accueil">Prépa<span>Ingénieur</span></a>
+    <div class="global-progress" id="globalProgress"></div>
+    <label class="search" for="search">
+      <span class="sr">Rechercher un chapitre</span>
+      <input id="search" type="search" placeholder="Rechercher : dérivée, RC, énergie…" autocomplete="off">
+    </label>
+    <nav id="nav" aria-label="Chapitres"></nav>
+  </aside>
+
+  <main class="main" id="main" tabindex="-1"></main>
+</div>
+
+<!-- Contenu : un fichier par matière. Pour ajouter un chapitre, voir README.md -->
+<script src="data/maths-lycee.js"></script>
+<script src="data/maths-sup.js"></script>
+<script src="data/maths-avance.js"></script>
+<script src="data/mecanique.js"></script>
+<script src="data/electricite.js"></script>
+<script src="data/cryptographie.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
