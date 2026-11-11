@@ -81,6 +81,14 @@ mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; padding: 4
 .bar > i { display: block; height: 100%; background: var(--good); border-radius: 99px; }
 
 .nav-group { display: grid; gap: 2px; }
+.nav-group > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding-right: 8px; border-radius: 7px; }
+.nav-group > summary::-webkit-details-marker { display: none; }
+.nav-group > summary:hover { background: var(--accent-soft); }
+.nav-group > summary small { font: 500 11px/1 var(--f-mono); color: var(--muted); }
+.nav-group > summary h3::after { content: "▸"; margin-left: 2px; color: var(--muted); transition: transform .15s; }
+.nav-group[open] > summary h3::after { transform: rotate(90deg); }
+.class-tabs { margin-bottom: 16px; }
+.class-grid .subject { box-shadow: none; }
 .nav-group h3 {
   font: 500 12px/1 var(--f-mono); text-transform: uppercase; letter-spacing: .08em;
   color: var(--mc, var(--muted)); padding: 14px 8px 8px; display: flex; align-items: center; gap: 8px;

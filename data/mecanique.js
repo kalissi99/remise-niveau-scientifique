@@ -5,7 +5,7 @@
 
   /* ================================================================ */
   {
-    id: 'cinematique', matiere: 'meca', niveau: 'Lycée',
+    id: 'cinematique', matiere: 'physique', niveau: 'Terminale', domaine: 'Mécanique',
     titre: 'Cinématique : décrire un mouvement',
     resume: 'Position, vitesse, accélération. Mouvements uniformes et uniformément accélérés.',
     motscles: 'vitesse accélération mru mrua équation horaire freinage',
@@ -67,7 +67,7 @@
 
   /* ================================================================ */
   {
-    id: 'newton', matiere: 'meca', niveau: 'Lycée',
+    id: 'newton', matiere: 'physique', niveau: 'Terminale', domaine: 'Mécanique',
     titre: 'Forces et lois de Newton',
     resume: 'Bilan des forces, principe fondamental de la dynamique, plan incliné, frottements, poulies.',
     motscles: 'force newton pfd poids réaction frottement tension plan incliné projectile',
@@ -128,7 +128,7 @@
 
   /* ================================================================ */
   {
-    id: 'energie', matiere: 'meca', niveau: 'Lycée',
+    id: 'energie', matiere: 'physique', niveau: 'Première', domaine: 'Mécanique',
     titre: 'Travail, énergie et puissance',
     resume: 'Une autre façon de résoudre les problèmes de mécanique, souvent bien plus rapide que Newton.',
     motscles: 'énergie cinétique potentielle mécanique travail puissance conservation',
@@ -197,7 +197,7 @@
 
   /* ================================================================ */
   {
-    id: 'oscillateurs', matiere: 'meca', niveau: 'Supérieur',
+    id: 'oscillateurs', matiere: 'physique', niveau: 'Supérieur', domaine: 'Mécanique',
     titre: 'Oscillateurs mécaniques',
     resume: 'Ressort, pendule, oscillations amorties : là où les équations différentielles prennent vie.',
     motscles: 'oscillateur harmonique ressort pendule période pulsation amortissement',

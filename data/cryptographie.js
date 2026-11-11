@@ -5,7 +5,7 @@
 
   /* ================================================================ */
   {
-    id: 'chiffrements-classiques', matiere: 'crypto', niveau: 'Lycée',
+    id: 'chiffrements-classiques', matiere: 'crypto', niveau: 'Initiation',
     titre: 'Chiffrements classiques : César, affine, Vigenère',
     resume: 'Les premiers chiffrements, comment on les casse, et les leçons qu’ils donnent encore aujourd’hui.',
     motscles: 'césar affine vigenère substitution fréquence analyse cryptanalyse',
@@ -72,7 +72,7 @@
 
   /* ================================================================ */
   {
-    id: 'modulaire', matiere: 'crypto', niveau: 'Supérieur',
+    id: 'modulaire', matiere: 'crypto', niveau: 'Intermédiaire',
     titre: 'Arithmétique modulaire',
     resume: 'Congruences, PGCD, Bézout, inverse modulaire, Fermat, exponentiation rapide : les maths de toute la cryptographie moderne.',
     motscles: 'modulo congruence pgcd euclide bézout inverse fermat euler exponentiation',
@@ -142,7 +142,7 @@
 
   /* ================================================================ */
   {
-    id: 'symetrique', matiere: 'crypto', niveau: 'Supérieur',
+    id: 'symetrique', matiere: 'crypto', niveau: 'Intermédiaire',
     titre: 'XOR et chiffrement symétrique',
     resume: 'Masque jetable, AES, modes de chiffrement, force brute : la cryptographie qui chiffre réellement les données.',
     motscles: 'xor masque jetable one-time pad aes des bloc mode ecb cbc gcm force brute clé',

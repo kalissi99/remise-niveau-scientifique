@@ -5,7 +5,7 @@
 
   /* ================================================================ */
   {
-    id: 'elec-bases', matiere: 'elec', niveau: 'Lycée',
+    id: 'elec-bases', matiere: 'physique', niveau: 'Seconde', domaine: 'Électricité',
     titre: 'Lois de base : Ohm et Kirchhoff',
     resume: 'Tension, courant, loi d’Ohm, loi des nœuds, loi des mailles, puissance. Les fondations de tout circuit.',
     motscles: 'tension courant ohm kirchhoff noeud maille puissance joule',
@@ -70,7 +70,7 @@
 
   /* ================================================================ */
   {
-    id: 'associations', matiere: 'elec', niveau: 'Lycée',
+    id: 'associations', matiere: 'physique', niveau: 'Première', domaine: 'Électricité',
     titre: 'Associations de résistances et diviseurs',
     resume: 'Série, parallèle, diviseur de tension et de courant, modèle de Thévenin.',
     motscles: 'série parallèle résistance équivalente diviseur tension courant thévenin',
@@ -134,7 +134,7 @@
 
   /* ================================================================ */
   {
-    id: 'circuit-rc', matiere: 'elec', niveau: 'Lycée',
+    id: 'circuit-rc', matiere: 'physique', niveau: 'Terminale', domaine: 'Électricité',
     titre: 'Condensateur et circuit RC',
     resume: 'Charge et décharge d’un condensateur, constante de temps, énergie stockée.',
     motscles: 'condensateur capacité rc constante de temps charge décharge tau',
@@ -204,7 +204,7 @@
 
   /* ================================================================ */
   {
-    id: 'rl-rlc', matiere: 'elec', niveau: 'Supérieur',
+    id: 'rl-rlc', matiere: 'physique', niveau: 'Supérieur', domaine: 'Électricité',
     titre: 'Bobine, circuits RL et RLC',
     resume: 'Inductance, continuité du courant, oscillations électriques et régimes d’amortissement.',
     motscles: 'bobine inductance rl rlc oscillation amortissement résistance critique lc',
@@ -273,7 +273,7 @@
 
   /* ================================================================ */
   {
-    id: 'sinusoidal', matiere: 'elec', niveau: 'Supérieur',
+    id: 'sinusoidal', matiere: 'physique', niveau: 'Supérieur', domaine: 'Électricité',
     titre: 'Régime sinusoïdal et impédances',
     resume: 'Valeurs efficaces, impédances complexes, déphasage, puissance, filtres et résonance.',
     motscles: 'alternatif sinusoïdal impédance complexe efficace déphasage filtre résonance fréquence de coupure',

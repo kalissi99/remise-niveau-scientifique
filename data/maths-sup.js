@@ -5,8 +5,8 @@
 
   /* ================================================================ */
   {
-    id: 'integrales', matiere: 'maths', niveau: 'Supérieur',
-    titre: 'Primitives et intégrales',
+    id: 'integrales', matiere: 'maths', niveau: 'Terminale',
+    titre: 'Calcul intégral',
     resume: 'L’opération inverse de la dérivée : calculer une aire, une charge, un travail, une valeur moyenne ou efficace.',
     motscles: 'intégrale primitive IPP intégration par parties aire valeur moyenne efficace',
     pourquoi: T`<p>Si la dérivée donne une vitesse à partir d'une position, l'intégrale fait l'inverse : elle <b>accumule</b>. Distance = intégrale de la vitesse, charge = intégrale du courant $q=\int i\,dt$, travail = intégrale de la force, valeur efficace d'un courant alternatif… En école d'ingénieur, c'est quotidien.</p>`,
@@ -75,7 +75,7 @@
 
   /* ================================================================ */
   {
-    id: 'complexes', matiere: 'maths', niveau: 'Supérieur',
+    id: 'complexes', matiere: 'maths', niveau: 'Maths expertes',
     titre: 'Nombres complexes',
     resume: 'Forme algébrique, module, argument, forme exponentielle. L’outil indispensable pour le courant alternatif.',
     motscles: 'complexe module argument conjugué euler exponentielle i j',
@@ -266,7 +266,7 @@ $$\ln(1+x)=x-\frac{x^2}2+o(x^2)\qquad (1+x)^\alpha=1+\alpha x+o(x)$$`,
 
   /* ================================================================ */
   {
-    id: 'matrices', matiere: 'maths', niveau: 'Supérieur',
+    id: 'matrices', matiere: 'maths', niveau: 'Maths expertes',
     titre: 'Systèmes linéaires et matrices',
     resume: 'Résoudre plusieurs équations à la fois : circuits à plusieurs mailles, structures, réseaux.',
     motscles: 'matrice système linéaire pivot gauss déterminant inverse',

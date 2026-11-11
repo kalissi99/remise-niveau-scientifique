@@ -7,7 +7,7 @@
 
   /* ================================================================ */
   {
-    id: 'calcul-base', matiere: 'maths', niveau: 'Lycée',
+    id: 'calcul-base', matiere: 'maths', niveau: 'Seconde',
     titre: 'Calcul de base : fractions, puissances, identités',
     resume: 'Les règles de calcul qui reviennent dans 100 % des exercices. Si tu te sens « nulle en maths », c’est ici qu’on commence.',
     motscles: 'fraction puissance factoriser développer identité remarquable',
@@ -77,8 +77,8 @@ $$\frac ab\times\frac cd=\frac{ac}{bd}\qquad \frac{a/b}{c/d}=\frac ab\times\frac
 
   /* ================================================================ */
   {
-    id: 'second-degre', matiere: 'maths', niveau: 'Lycée',
-    titre: 'Équations et second degré',
+    id: 'second-degre', matiere: 'maths', niveau: 'Première',
+    titre: 'Second degré',
     resume: 'Résoudre une équation, choisir entre factoriser et discriminant, étudier le signe d’un trinôme.',
     motscles: 'discriminant delta trinôme équation inéquation racine',
     pourquoi: T`<p>Résoudre une équation, c'est trouver la valeur qui rend une situation vraie : <i>à quel instant</i> la balle touche le sol, <i>quelle résistance</i> donne la bonne tension. Le second degré apparaît partout : chute libre ($\frac12gt^2$), énergie ($\frac12mv^2$), équations caractéristiques en électricité.</p>`,
@@ -142,7 +142,7 @@ $$\frac ab\times\frac cd=\frac{ac}{bd}\qquad \frac{a/b}{c/d}=\frac ab\times\frac
 
   /* ================================================================ */
   {
-    id: 'trigonometrie', matiere: 'maths', niveau: 'Lycée',
+    id: 'trigonometrie', matiere: 'maths', niveau: 'Première',
     titre: 'Trigonométrie',
     resume: 'Sinus, cosinus, radians et triangles : l’outil pour décomposer les forces et décrire tout ce qui tourne ou oscille.',
     motscles: 'sinus cosinus tangente radian cercle al-kashi angle',
@@ -210,7 +210,7 @@ $$\frac ab\times\frac cd=\frac{ac}{bd}\qquad \frac{a/b}{c/d}=\frac ab\times\frac
 
   /* ================================================================ */
   {
-    id: 'derivees', matiere: 'maths', niveau: 'Lycée',
+    id: 'derivees', matiere: 'maths', niveau: 'Première',
     titre: 'Dérivées et variations',
     resume: 'La dérivée mesure une vitesse de variation. C’est l’outil n°1 de la physique : vitesse, accélération, courant dans un condensateur…',
     motscles: 'dérivée tangente variation extremum optimisation',
@@ -277,8 +277,8 @@ $$\frac ab\times\frac cd=\frac{ac}{bd}\qquad \frac{a/b}{c/d}=\frac ab\times\frac
 
   /* ================================================================ */
   {
-    id: 'exp-ln', matiere: 'maths', niveau: 'Lycée',
-    titre: 'Exponentielle et logarithme',
+    id: 'exp-ln', matiere: 'maths', niveau: 'Première',
+    titre: 'Exponentielle (1re) et logarithme (Tle)',
     resume: 'Les fonctions de la croissance et de la décroissance : décharge d’un condensateur, radioactivité, intérêts, décibels.',
     motscles: 'exponentielle logarithme ln exp demi-vie croissance',
     pourquoi: T`<p>Chaque fois qu'une quantité varie <b>proportionnellement à elle-même</b>, l'exponentielle apparaît : décharge d'un condensateur $u=Ee^{-t/RC}$, refroidissement, radioactivité. Le logarithme sert à <b>récupérer l'exposant</b> : « au bout de combien de temps ? ».</p>`,
@@ -342,7 +342,7 @@ $$\frac ab\times\frac cd=\frac{ac}{bd}\qquad \frac{a/b}{c/d}=\frac ab\times\frac
 
   /* ================================================================ */
   {
-    id: 'suites', matiere: 'maths', niveau: 'Lycée',
+    id: 'suites', matiere: 'maths', niveau: 'Première',
     titre: 'Suites numériques',
     resume: 'Arithmétiques, géométriques et récurrentes : modéliser une évolution étape par étape.',
     motscles: 'suite arithmétique géométrique raison somme récurrence limite',

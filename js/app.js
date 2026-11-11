@@ -3,16 +3,38 @@
 (function () {
   'use strict';
 
-  var CH = window.CHAPITRES || [];
   var MAT = {
-    maths: { nom: 'Mathématiques', color: 'var(--maths)', desc: 'Le langage de toutes les sciences de l’ingénieur : calcul, fonctions, intégrales, complexes, équations différentielles.' },
-    meca:  { nom: 'Mécanique', color: 'var(--meca)', desc: 'Mouvement, forces, énergie et oscillations : comprendre pourquoi les objets bougent comme ils bougent.' },
-    elec:  { nom: 'Électricité', color: 'var(--elec)', desc: 'Circuits, condensateurs, bobines et régime sinusoïdal : la base de l’électronique et de l’électrotechnique.' },
-    crypto: { nom: 'Cryptographie', color: 'var(--crypto)', desc: 'Des chiffrements historiques à RSA, Diffie-Hellman et au hachage : les maths qui protègent les données et les paiements.' }
+    maths:   { nom: 'Mathématiques', color: 'var(--maths)', desc: 'Programme complet de la Seconde aux maths expertes, puis supérieur et avancé.' },
+    physique:{ nom: 'Physique', color: 'var(--meca)', desc: 'Mécanique, électricité, ondes, optique, thermodynamique et physique nucléaire.' },
+    chimie:  { nom: 'Chimie', color: 'var(--elec)', desc: 'Matière, solutions, réactions, oxydoréduction, acide-base, cinétique, chimie organique.' },
+    crypto:  { nom: 'Cryptographie', color: 'var(--crypto)', desc: 'Des chiffrements historiques à RSA, Diffie-Hellman et au hachage.' }
   };
-  var ORDER = ['maths', 'meca', 'elec', 'crypto'];
-  var NIV = ['Lycée', 'Supérieur', 'Avancé'];
+  var ORDER = ['maths', 'physique', 'chimie', 'crypto'];
+  var NIV = ['Seconde', 'Première', 'Terminale', 'Maths expertes', 'Initiation', 'Intermédiaire', 'Supérieur', 'Avancé'];
+  var CLASSES = [
+    { id: 'Seconde', label: 'Seconde', niv: ['Seconde'] },
+    { id: 'Première', label: 'Première', niv: ['Première'] },
+    { id: 'Terminale', label: 'Terminale', niv: ['Terminale'] },
+    { id: 'Maths expertes', label: 'Maths expertes', niv: ['Maths expertes'] },
+    { id: 'Sup', label: 'Supérieur et avancé', niv: ['Supérieur', 'Avancé'] },
+    { id: 'Crypto', label: 'Cryptographie', mat: 'crypto' }
+  ];
   var DIFF = { 1: 'Facile', 2: 'Moyen', 3: 'Difficile' };
+
+  var CH = (window.CHAPITRES || []).map(function (c, i) { c._i = i; return c; }).sort(function (a, b) {
+    return (ORDER.indexOf(a.matiere) - ORDER.indexOf(b.matiere)) || (NIV.indexOf(a.niveau) - NIV.indexOf(b.niveau)) || (a._i - b._i);
+  });
+  /* Ajustements d'ordre entre fichiers : [chapitre à déplacer, chapitre de référence, 'avant' | 'apres'] */
+  [['calcul-base', 'nombres-intervalles', 'avant'], ['integrales', 'primitives-equadiff-tle', 'apres']].forEach(function (r) {
+    var a = -1, b = -1;
+    CH.forEach(function (c, i) { if (c.id === r[0]) a = i; });
+    if (a < 0) return;
+    var item = CH.splice(a, 1)[0];
+    CH.forEach(function (c, i) { if (c.id === r[1]) b = i; });
+    if (b < 0) { CH.splice(a, 0, item); return; }
+    CH.splice(r[2] === 'avant' ? b : b + 1, 0, item);
+  });
+  var homeClass = 'Seconde';
 
   var KEY = 'prepa-ingenieur-progress-v1';
   var done = {};
@@ -41,74 +63,106 @@
   }
 
   /* ---------- Navigation latérale ---------- */
+  var openGroups = {};
   function renderNav(filter) {
     var q = (filter || '').trim().toLowerCase();
-    var current = location.hash.slice(1);
+    var current = byId(location.hash.slice(1));
     var html = '';
     ORDER.forEach(function (m) {
       var list = CH.filter(function (c) {
         if (c.matiere !== m) return false;
         if (!q) return true;
-        var hay = (c.titre + ' ' + c.resume + ' ' + (c.motscles || '')).toLowerCase();
+        var hay = (c.titre + ' ' + c.resume + ' ' + (c.motscles || '') + ' ' + c.niveau).toLowerCase();
         return hay.indexOf(q) !== -1;
       });
       if (!list.length) return;
-      html += '<div class="nav-group" style="--mc:' + MAT[m].color + '"><h3>' + MAT[m].nom + '</h3>';
+      var t = 0, n = 0; list.forEach(function (c) { t += c.exos.length; n += chapDone(c); });
+      var open = q || openGroups[m] || (current && current.matiere === m);
+      html += '<details class="nav-group" data-m="' + m + '" style="--mc:' + MAT[m].color + '"' + (open ? ' open' : '') + '><summary><h3>' + MAT[m].nom + '</h3><small>' + n + '/' + t + '</small></summary>';
       NIV.forEach(function (niv) {
         var sub = list.filter(function (c) { return c.niveau === niv; });
         if (!sub.length) return;
         html += '<div class="nav-level">' + niv + '</div>';
         sub.forEach(function (c) {
-          var n = chapDone(c), t = (c.exos || []).length;
-          html += '<a class="nav-link' + (c.id === current ? ' active' : '') + (n === t && t ? ' done' : '') + '" href="#' + c.id + '"><span>' + esc(c.titre) + '</span><small>' + n + '/' + t + '</small></a>';
+          var k = chapDone(c), tt = c.exos.length;
+          html += '<a class="nav-link' + (current && c.id === current.id ? ' active' : '') + (k === tt && tt ? ' done' : '') + '" href="#' + c.id + '"><span>' + esc(c.titre) + '</span><small>' + k + '/' + tt + '</small></a>';
         });
       });
-      html += '</div>';
+      html += '</details>';
     });
     $nav.innerHTML = html || '<p class="ex-count">Aucun chapitre ne correspond.</p>';
+    $nav.querySelectorAll('details').forEach(function (d) {
+      d.addEventListener('toggle', function () { openGroups[d.getAttribute('data-m')] = d.open; });
+    });
 
     var tot = 0, ok = 0;
-    CH.forEach(function (c) { tot += (c.exos || []).length; ok += chapDone(c); });
+    CH.forEach(function (c) { tot += c.exos.length; ok += chapDone(c); });
     var pct = tot ? Math.round(ok / tot * 100) : 0;
     $gp.innerHTML = '<span>' + ok + ' exercices réussis sur ' + tot + ' (' + pct + ' %)</span><div class="bar"><i style="width:' + pct + '%"></i></div>';
   }
 
   /* ---------- Accueil ---------- */
+  function classChapters(cl, m) {
+    return CH.filter(function (c) {
+      if (cl.mat) return c.matiere === cl.mat && (!m || m === cl.mat);
+      return c.matiere === m && cl.niv.indexOf(c.niveau) !== -1;
+    });
+  }
+
+  function renderClassGrid() {
+    var cl = CLASSES.filter(function (x) { return x.id === homeClass; })[0];
+    var h = '';
+    var mats = cl.mat ? [cl.mat] : ORDER.filter(function (m) { return m !== 'crypto'; });
+    mats.forEach(function (m) {
+      var list = classChapters(cl, m);
+      if (!list.length) return;
+      var t = 0, n = 0; list.forEach(function (c) { t += c.exos.length; n += chapDone(c); });
+      h += '<div class="subject" style="--mc:' + MAT[m].color + '"><h3>' + MAT[m].nom + '</h3><p class="meta">' + list.length + ' chapitres · ' + n + '/' + t + ' exercices réussis</p><ol>';
+      list.forEach(function (c) {
+        h += '<li><a href="#' + c.id + '">' + esc(c.titre) + '</a>' + (cl.niv && cl.niv.length > 1 ? ' <span class="meta">' + c.niveau + '</span>' : '') + (c.domaine ? ' <span class="meta">' + c.domaine + '</span>' : '') + '</li>';
+      });
+      h += '</ol></div>';
+    });
+    return h;
+  }
+
   function renderHome() {
+    var nCh = CH.length, nEx = 0; CH.forEach(function (c) { nEx += c.exos.length; });
     var h = '<div class="page">';
-    h += '<section class="hero"><h1>Devenir fort en maths, physique et cryptographie</h1>' +
-      '<p>Maths, mécanique, électricité et cryptographie, du lycée jusqu\u2019au niveau école d\u2019ingénieur. Chaque chapitre explique la notion, donne les formules avec <b>quand</b> les utiliser et <b>pourquoi pas une autre</b>, puis propose des exercices du facile au difficile, corrigés étape par étape.</p></section>';
+    h += '<section class="hero"><h1>Remise à niveau scientifique</h1>' +
+      '<p>Maths (jusqu’aux maths expertes), physique, chimie et cryptographie, de la Seconde au niveau école d’ingénieur : ' + nCh + ' chapitres et ' + nEx + ' exercices. Chaque chapitre explique la notion, donne les formules avec <b>quand</b> les utiliser et <b>pourquoi pas une autre</b>, puis propose des exercices du facile au difficile, corrigés étape par étape.</p></section>';
+
+    h += '<section class="panel"><h2>Programme par classe</h2><div class="filters class-tabs" role="tablist" aria-label="Choisir une classe">';
+    CLASSES.forEach(function (cl) {
+      h += '<button class="chip" type="button" role="tab" data-class="' + cl.id + '" aria-pressed="' + (cl.id === homeClass) + '">' + cl.label + '</button>';
+    });
+    h += '</div><div class="subjects class-grid" id="classGrid">' + renderClassGrid() + '</div></section>';
 
     h += '<section class="panel"><h2>La méthode à appliquer sur chaque exercice</h2><ol class="steps">' +
       '<li><div><b>Lire et traduire</b>Réécris l’énoncé avec des symboles : ce qui est donné (avec unités) et ce qui est demandé.</div></li>' +
-      '<li><div><b>Faire un schéma</b>Courbe, forces, circuit… 80 % des blocages viennent d’un problème qu’on n’a pas « vu ».</div></li>' +
-      '<li><div><b>Choisir l’outil</b>Demande-toi : « quelle formule relie ce que j’ai à ce que je cherche ? » Chaque fiche formule de la plateforme te dit dans quelle situation l’utiliser.</div></li>' +
+      '<li><div><b>Faire un schéma</b>Courbe, forces, circuit, tableau d’avancement… La plupart des blocages viennent d’un problème qu’on n’a pas « vu ».</div></li>' +
+      '<li><div><b>Choisir l’outil</b>Demande-toi : « quelle formule relie ce que j’ai à ce que je cherche ? » Chaque fiche formule te dit dans quelle situation l’utiliser.</div></li>' +
       '<li><div><b>Calculer en lettres d’abord</b>Garde les symboles jusqu’au bout, remplace par les nombres à la fin. Moins d’erreurs, et tu peux vérifier les unités.</div></li>' +
       '<li><div><b>Vérifier</b>Unité correcte ? Ordre de grandeur réaliste ? Signe logique ? Cas limite cohérent ?</div></li>' +
       '</ol></section>';
 
-    h += '<section class="subjects">';
-    ORDER.forEach(function (m) {
-      var list = CH.filter(function (c) { return c.matiere === m; });
-      var t = 0, n = 0; list.forEach(function (c) { t += (c.exos || []).length; n += chapDone(c); });
-      h += '<div class="subject" style="--mc:' + MAT[m].color + '"><h3>' + MAT[m].nom + '</h3><p class="meta">' + list.length + ' chapitres · ' + n + '/' + t + ' exercices</p>' +
-        '<p style="margin:0;font-size:14.5px;color:var(--muted)">' + MAT[m].desc + '</p><ol>';
-      list.forEach(function (c) { h += '<li><a href="#' + c.id + '">' + esc(c.titre) + '</a> <span class="meta">' + c.niveau + '</span></li>'; });
-      h += '</ol></div>';
-    });
-    h += '</section>';
-
-    h += '<section class="panel"><h2>Parcours conseillé si tu pars de loin</h2><div class="prose">' +
-      '<p>Les trois matières sont liées : la mécanique et l’électricité <i>utilisent</i> les maths. Suis cet ordre et ne passe au chapitre suivant que quand tu réussis les exercices « Moyen » sans regarder la solution.</p>' +
-      '<ol><li>Maths : Calcul de base → Second degré → Trigonométrie → Dérivées → Exponentielle et logarithme</li>' +
-      '<li>Mécanique : Cinématique → Lois de Newton → Énergie</li>' +
-      '<li>Électricité : Lois de base → Associations et diviseurs → Condensateur et circuit RC</li>' +
-      '<li>Niveau supérieur : Intégrales → Complexes → Équations différentielles → Oscillateurs → RLC → Régime sinusoïdal</li>' +
-      '<li>Cryptographie : Chiffrements classiques → Arithmétique modulaire → XOR et symétrique → RSA → Diffie-Hellman → Hachage</li>' +
-      '<li>Niveau avancé : Probabilités → Diagonalisation → Fourier → Laplace</li></ol>' +
+    h += '<section class="panel"><h2>Comment progresser</h2><div class="prose">' +
+      '<ol><li>Commence par la classe où tu te sens à l’aise, même si c’est la Seconde : les bases rendent tout le reste plus facile.</li>' +
+      '<li>Dans chaque chapitre : lis « À quoi ça sert » et le cours, puis les fiches formules, puis l’exemple résolu.</li>' +
+      '<li>Fais les exercices dans l’ordre. Ne passe au chapitre suivant que lorsque tu réussis les exercices « Moyen » sans regarder la solution.</li>' +
+      '<li>Maths et physique avancent ensemble : dérivées avant la cinématique, exponentielle avant le circuit RC, équations différentielles avant les oscillateurs.</li></ol>' +
       '<p><b>Règle d’or :</b> essaie chaque exercice au moins 10 minutes avant d’ouvrir l’indice, et refais-le seul le lendemain.</p></div></section>';
     h += '</div>';
     $main.innerHTML = h;
+    $main.querySelectorAll('[data-class]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        homeClass = b.getAttribute('data-class');
+        $main.querySelectorAll('[data-class]').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+        var g = document.getElementById('classGrid');
+        g.innerHTML = renderClassGrid();
+        typeset(g);
+      });
+    });
     typeset($main);
   }
 
@@ -123,7 +177,7 @@
     var idx = CH.indexOf(c);
     var mc = MAT[c.matiere].color;
     var h = '<div class="page" style="--mc:' + mc + '">';
-    h += '<header class="chap-head"><div class="crumbs"><span>' + MAT[c.matiere].nom + '</span><span>·</span><span>' + c.niveau + '</span></div>' +
+    h += '<header class="chap-head"><div class="crumbs"><span>' + MAT[c.matiere].nom + '</span><span>·</span><span>' + c.niveau + '</span>' + (c.domaine ? '<span>·</span><span>' + c.domaine + '</span>' : '') + '</div>' +
       '<h1>' + esc(c.titre) + '</h1><p>' + c.resume + '</p>' +
       '<nav class="toc" aria-label="Sections du chapitre"><a href="#" data-go="s-pourquoi">Pourquoi</a><a href="#" data-go="s-cours">Cours</a><a href="#" data-go="s-formules">Formules</a><a href="#" data-go="s-methode">Méthode</a><a href="#" data-go="s-exemple">Exemple</a><a href="#" data-go="s-pieges">Pièges</a><a href="#" data-go="s-exos">Exercices (' + c.exos.length + ')</a></nav></header>';
 
